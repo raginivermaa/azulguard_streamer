@@ -1,10 +1,15 @@
 from app.models import Sensor_Data, Apartment
-from app import app, db, window_start, window_end, update_window
+from app import app, db, window_start, window_end
+from datetime import timedelta as TimeDelta
 from flask import jsonify
 
 @app.route('/api/data', methods=['GET'])
 
 def get_sensor_data():
+    global window_start
+    print(window_start)
+    global window_end
+    print(window_end)
 
     result = {}
     for a in Apartment.query.all():
@@ -16,8 +21,9 @@ def get_sensor_data():
             data_object = data[0].__dict__
             data_object.pop('_sa_instance_state', None)
             result[a.aid] = data_object
+    window_start = window_end
+    window_end = window_start + TimeDelta(minutes=5)
     return jsonify(result)
-    update_window()
 
 @app.route('/home')
 def home():

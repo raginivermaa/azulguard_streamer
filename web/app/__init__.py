@@ -13,7 +13,4 @@ migrate = Migrate(app, db)
 window_start = datetime.datetime(2017, 10, 26, hour=16, minute=40, second=0, microsecond=0)
 window_end = window_start + TimeDelta(minutes=5)
 
-print(window_start)
-print(window_end)
-
 from app import routes, models
