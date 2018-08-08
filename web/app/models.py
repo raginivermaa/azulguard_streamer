@@ -2,7 +2,8 @@ from app import db
 
 class Sensor_Data(db.Model):
     __tablename__ = 'sensor_data'
-    datetime=db.Column(db.String(128), index=True, primary_key=True)
+    datetime=db.Column(db.DateTime, index=True, primary_key=True)
+    apartment=db.Column(db.ForeignKey('apartment.aid'), primary_key=True, index=True)
     beacon=db.Column(db.String(64), index=True)
     d_01=db.Column(db.String(64), index=True)
     m_01=db.Column(db.String(64), index=True)
@@ -11,7 +12,6 @@ class Sensor_Data(db.Model):
     m_04=db.Column(db.String(64), index=True)
     minutes=db.Column(db.String(64), index=True)
     day=db.Column(db.String(64), index=True)
-    apartment=db.Column(db.ForeignKey('apartment.aid'), index=True)
 
     def __repr__(self):
         return '<Sensor_Data {}>'.format(self.datetime)
