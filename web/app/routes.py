@@ -1,6 +1,7 @@
 from app.models import Sensor_Data, Apartment
 from app import app, db, window_start, window_end
 from datetime import timedelta as TimeDelta
+import datetime
 from flask import jsonify
 
 @app.route('/api/data', methods=['GET'])
@@ -28,3 +29,11 @@ def get_sensor_data():
 @app.route('/home')
 def home():
     return "HELLO"
+
+@app.route('/reset')
+def reset():
+    global window_start
+    global window_end
+    window_start = datetime.datetime(2017, 10, 26, hour=16, minute=40, second=0, microsecond=0)
+    window_end = window_start + TimeDelta(minutes=5)
+    return jsonify({'status': 'successfully reset time to 2017-10-26T16:40:00'})
